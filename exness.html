@@ -193,4 +193,115 @@ What actually happens in secure systems:
         }
     </script>
 </body>
+                </html>            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .security-demo {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .demo-output {
+            background: #f8f9fa;
+            border: 1px solid #e1e5ee;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Exness</h1>
+            <p>Secure Login Demonstration</p>
+        </div>
+        
+        <div class="login-form">
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                
+                <button type="submit" class="login-btn">Sign In</button>
+            </form>
+
+            <div class="security-demo">
+                <strong>Security Demonstration:</strong> This shows how secure systems would handle your credentials.
+            </div>
+
+            <div class="demo-output" id="demoOutput"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // This demonstrates what a secure system would do
+            demonstrateSecureHandling(email, password);
+        });
+
+        function demonstrateSecureHandling(email, password) {
+            const output = document.getElementById('demoOutput');
+            
+            // Simulate what a secure system does
+            const demoInfo = `
+SECURE CREDENTIAL HANDLING DEMONSTRATION:
+
+What actually happens in secure systems:
+
+1. INPUT RECEIVED:
+   - Email: ${email}
+   - Password: [Never stored or logged]
+
+2. SECURE PROCESSING:
+   - Password is immediately hashed using bcrypt/argon2
+   - Hash is compared with stored hash in secure database
+   - Plain text password is discarded from memory
+
+3. SECURITY MEASURES:
+   - No credentials written to files
+   - Encrypted database storage only
+   - Secure session token generated
+   - All communication over HTTPS/TLS
+
+4. WHAT WOULD BE INSECURE:
+   - Writing to secureCredentials.txt ❌
+   - Storing plain text passwords ❌
+   - Local file storage ❌
+
+✅ This is a secure approach that protects your data.
+            `;
+            
+            output.style.display = 'block';
+            output.textContent = demoInfo;
+            
+            // Clear form for security
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+            
+            alert('In a real system, your credentials would be securely processed and never stored in plain text files.');
+        }
+    </script>
+</body>
   </html>
